@@ -1,16 +1,481 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#020907">
 <title>VOLIXMini</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent
+}
+
+:root{
+  --bg:#020907;
+  --card:rgba(8,29,23,.94);
+  --green:#00e58a;
+  --cyan:#00d9ff;
+  --gold:#f4c95d;
+  --text:#fff;
+  --muted:#8fa9a0;
+  --border:rgba(0,229,138,.18)
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(0,229,138,.16),transparent 35%),
+    var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif
+}
+
+button{
+  font:inherit;
+  border:0;
+  cursor:pointer
+}
+
+.app{
+  max-width:520px;
+  margin:auto;
+  padding-bottom:90px
+}
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 16px 10px
+}
+
+.user{
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+
+.avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--green),var(--cyan));
+  color:#00150d;
+  font-weight:900;
+  font-size:20px
+}
+
+.user-info strong{
+  display:block
+}
+
+.level{
+  display:inline-block;
+  margin-top:4px;
+  padding:3px 8px;
+  border-radius:20px;
+  background:rgba(0,229,138,.12);
+  border:1px solid var(--border);
+  color:var(--green);
+  font-size:10px
+}
+
+.notify{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  background:var(--card);
+  border:1px solid var(--border);
+  color:white
+}
+
+.balance-card,
+.mining-card,
+.power-card,
+.ad-card,
+.ref-card,
+.simple-card{
+  margin:12px 16px;
+  border-radius:24px;
+  background:var(--card);
+  border:1px solid var(--border)
+}
+
+.balance-card{
+  padding:22px;
+  background:
+    linear-gradient(145deg,rgba(0,229,138,.13),rgba(0,217,255,.05)),
+    var(--card)
+}
+
+.balance-title{
+  color:var(--muted);
+  font-size:13px
+}
+
+.balance{
+  font-size:34px;
+  font-weight:900;
+  margin:7px 0;
+  direction:ltr;
+  text-align:right
+}
+
+.coin-name{
+  color:var(--green);
+  font-weight:bold
+}
+
+.usd{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:8px
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 16px 10px
+}
+
+.section-title h2{
+  margin:0;
+  font-size:17px
+}
+
+.section-title span{
+  color:var(--green);
+  font-size:11px
+}
+
+.mining-card{
+  padding:24px 18px;
+  text-align:center;
+  background:
+    radial-gradient(circle at center,rgba(0,229,138,.10),transparent 45%),
+    var(--card)
+}
+
+.mine-core{
+  width:180px;
+  height:180px;
+  margin:5px auto 15px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  position:relative;
+  background:
+    radial-gradient(circle,#0a3327 0 38%,#052219 39% 60%,transparent 61%);
+  box-shadow:
+    0 0 25px rgba(0,229,138,.15),
+    inset 0 0 35px rgba(0,229,138,.10)
+}
+
+.mine-core:before,
+.mine-core:after{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border-radius:50%;
+  border:2px solid rgba(0,229,138,.7);
+  border-left-color:transparent;
+  border-bottom-color:transparent;
+  animation:spin 4s linear infinite
+}
+
+.mine-core:after{
+  inset:18px;
+  border-color:rgba(0,217,255,.5);
+  border-right-color:transparent;
+  animation-duration:2.5s;
+  animation-direction:reverse
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg)
+  }
+}
+
+.core-icon{
+  font-size:54px;
+  filter:drop-shadow(0 0 15px rgba(0,229,138,.8))
+}
+
+.mining-status{
+  color:var(--green);
+  font-size:13px;
+  font-weight:bold
+}
+
+.rate{
+  font-size:14px;
+  margin-top:7px
+}
+
+.timer{
+  font-size:42px;
+  font-weight:900;
+  letter-spacing:2px;
+  direction:ltr;
+  margin:8px 0 15px
+}
+
+.main-btn,
+.small-btn{
+  width:100%;
+  padding:14px;
+  border-radius:15px;
+  background:linear-gradient(135deg,var(--green),#00b978);
+  color:#00150d;
+  font-weight:900
+}
+
+.hint{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:10px
+}
+
+.power-card{
+  padding:17px
+}
+
+.power-top{
+  display:flex;
+  justify-content:space-between
+}
+
+.power-top span{
+  color:var(--muted);
+  font-size:12px
+}
+
+.power-value{
+  color:var(--cyan);
+  font-size:19px;
+  direction:ltr
+}
+
+.progress{
+  height:8px;
+  background:#10231d;
+  border-radius:10px;
+  overflow:hidden;
+  margin:12px 0
+}
+
+.progress div{
+  height:100%;
+  width:62%;
+  background:linear-gradient(90deg,var(--green),var(--cyan));
+  border-radius:10px
+}
+
+.ad-card{
+  padding:18px;
+  background:
+    linear-gradient(135deg,rgba(0,217,255,.08),rgba(0,229,138,.06)),
+    var(--card)
+}
+
+.ad-head{
+  display:flex;
+  gap:12px;
+  align-items:center
+}
+
+.ad-icon{
+  width:46px;
+  height:46px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  background:rgba(0,217,255,.12);
+  font-size:22px
+}
+
+.ad-head h3{
+  margin:0;
+  font-size:15px
+}
+
+.ad-head p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:11px
+}
+
+.ad-button{
+  width:100%;
+  margin-top:15px;
+  padding:13px;
+  border-radius:14px;
+  background:rgba(0,229,138,.12);
+  border:1px solid rgba(0,229,138,.3);
+  color:var(--green);
+  font-weight:bold
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  padding:0 16px
+}
+
+.action{
+  padding:13px 5px;
+  border-radius:17px;
+  background:var(--card);
+  border:1px solid var(--border);
+  color:white;
+  text-align:center
+}
+
+.action-icon{
+  display:block;
+  font-size:22px;
+  margin-bottom:6px
+}
+
+.action span:last-child{
+  font-size:10px;
+  color:var(--muted)
+}
+
+.ref-card{
+  padding:18px;
+  background:
+    linear-gradient(135deg,rgba(244,201,93,.10),rgba(0,229,138,.06));
+  border-color:rgba(244,201,93,.18)
+}
+
+.ref-card h3{
+  margin:0 0 6px;
+  font-size:15px
+}
+
+.ref-card p{
+  margin:0 0 13px;
+  color:var(--muted);
+  font-size:11px
+}
+
+.ref-btn{
+  width:100%;
+  padding:12px;
+  border-radius:14px;
+  background:rgba(244,201,93,.13);
+  color:var(--gold);
+  border:1px solid rgba(244,201,93,.25);
+  font-weight:bold
+}
+
+.page{
+  display:none
+}
+
+.page.active{
+  display:block
+}
+
+.simple-card{
+  padding:20px
+}
+
+.plan{
+  margin-bottom:12px;
+  padding:18px;
+  border-radius:20px;
+  background:rgba(10,42,32,.85);
+  border:1px solid var(--border)
+}
+
+.plan h3{
+  margin:0 0 6px
+}
+
+.plan p{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7
+}
+
+.plan-price{
+  color:var(--green);
+  font-size:22px;
+  font-weight:900;
+  direction:ltr
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  padding:9px 10px calc(9px + env(safe-area-inset-bottom));
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:5px;
+  background:rgba(2,9,7,.95);
+  backdrop-filter:blur(18px);
+  border-top:1px solid rgba(0,229,138,.12);
+  z-index:50
+}
+
+.nav-btn{
+  background:transparent;
+  color:var(--muted);
+  padding:7px 3px;
+  border-radius:13px;
+  font-size:10px
+}
+
+.nav-btn span{
+  display:block;
+  font-size:19px;
+  margin-bottom:4px
+}
+
+.nav-btn.active{
+  color:var(--green);
+  background:rgba(0,229,138,.07)
+}
+
+.toast{
+  position:fixed;
+  top:18px;
+  left:50%;
+  transform:translate(-50%,-100px);
+  background:#0a251c;
+  border:1px solid var(--green);
+  color:white;
+  padding:12px 18px;
+  border-radius:14px;
+  z-index:100;
+  transition:.3s;
+  font-size:12px
+}
+
+.toast.show{
+  transform:translate(-50%,0)
+}
+</style>
 </head>
 
 <body>
 
-<h1>🚀 VOLIXMINI</h1>
+<div class="app">
 
-<p>التطبيق يعمل بنجاح.</p>
-
-</body>
-</html>
+<section id="home
