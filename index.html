@@ -11,2122 +11,564 @@
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-
 :root{
---bg:#020907;
---card:rgba(8,29,23,.94);
---green:#00e58a;
---cyan:#00d9ff;
---gold:#f4c95d;
---text:#fff;
---muted:#8fa9a0;
---border:rgba(0,229,138,.18)
-}
-
-body{
-margin:0;
-min-height:100vh;
-background:
-radial-gradient(circle at 50% -10%,rgba(0,229,138,.16),transparent 35%),
-var(--bg);
-color:var(--text);
-font-family:Arial,sans-serif
-}
-
-button{
-font:inherit;
-border:0;
-cursor:pointer
-}
-
-.app{
-max-width:520px;
-margin:auto;
-padding-bottom:95px
-}
-
-.header{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:18px 16px 10px
-}
-
-.user{
-display:flex;
-align-items:center;
-gap:10px
-}
-
-.avatar{
-width:45px;
-height:45px;
-border-radius:50%;
-display:grid;
-place-items:center;
-background:linear-gradient(135deg,var(--green),var(--cyan));
-color:#00150d;
-font-weight:900;
-font-size:20px
-}
-
-.user-info strong{
-display:block
-}
-
-.level{
-display:inline-block;
-margin-top:4px;
-padding:3px 8px;
-border-radius:20px;
-background:rgba(0,229,138,.12);
-border:1px solid var(--border);
-color:var(--green);
-font-size:10px
-}
-
-.notify{
-width:42px;
-height:42px;
-border-radius:14px;
-background:var(--card);
-border:1px solid var(--border);
-color:white
-}
-
-.balance-card,
-.mining-card,
-.power-card,
-.ad-card,
-.ref-card,
-.simple-card{
-margin:12px 16px;
-border-radius:24px;
-background:var(--card);
-border:1px solid var(--border)
-}
-
-.balance-card{
-padding:22px;
-background:
-linear-gradient(145deg,rgba(0,229,138,.13),rgba(0,217,255,.05)),
-var(--card)
-}
-
-.balance-title{
-color:var(--muted);
-font-size:13px
-}
-
-.balance{
-font-size:34px;
-font-weight:900;
-margin:7px 0;
-direction:ltr;
-text-align:right
-}
-
-.coin-name{
-color:var(--green);
-font-weight:bold
-}
-
-.usd{
-color:var(--muted);
-font-size:11px;
-margin-top:8px
-}
-
-.section-title{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 16px 10px
-}
-
-.section-title h2{
-margin:0;
-font-size:17px
-}
-
-.section-title span{
-color:var(--green);
-font-size:11px
-}
-
-.mining-card{
-padding:24px 18px;
-text-align:center;
-background:
-radial-gradient(circle at center,rgba(0,229,138,.10),transparent 45%),
-var(--card)
-}
-
-.mine-core{
-width:180px;
-height:180px;
-margin:5px auto 15px;
-border-radius:50%;
-display:grid;
-place-items:center;
-position:relative;
-background:
-radial-gradient(circle,#0a3327 0 38%,#052219 39% 60%,transparent 61%);
-box-shadow:
-0 0 25px rgba(0,229,138,.15),
-inset 0 0 35px rgba(0,229,138,.10)
-}
-
-.mine-core:before,
-.mine-core:after{
-content:"";
-position:absolute;
-inset:5px;
-border-radius:50%;
-border:2px solid rgba(0,229,138,.7);
-border-left-color:transparent;
-border-bottom-color:transparent;
-animation:spin 4s linear infinite
-}
-
-.mine-core:after{
-inset:18px;
-border-color:rgba(0,217,255,.5);
-border-right-color:transparent;
-animation-duration:2.5s;
-animation-direction:reverse
-}
-
-@keyframes spin{
-to{transform:rotate(360deg)}
-}
-
-.core-icon{
-font-size:54px;
-filter:drop-shadow(0 0 15px rgba(0,229,138,.8))
-}
-
-.mining-status{
-color:var(--green);
-font-size:13px;
-font-weight:bold
-}
-
-.rate{
-font-size:14px;
-margin-top:7px
-}
-
-.timer{
-font-size:42px;
-font-weight:900;
-letter-spacing:2px;
-direction:ltr;
-margin:8px 0 15px
-}
-
-.main-btn,
-.small-btn{
-width:100%;
-padding:14px;
-border-radius:15px;
-background:linear-gradient(135deg,var(--green),#00b978);
-color:#00150d;
-font-weight:900
-}
-
-.main-btn:disabled{
-opacity:.55;
-cursor:not-allowed
-}
-
-.hint{
-color:var(--muted);
-font-size:11px;
-margin-top:10px;
-line-height:1.7
-}
-
-.power-card{
-padding:17px
-}
-
-.power-top{
-display:flex;
-justify-content:space-between
-}
-
-.power-top span{
-color:var(--muted);
-font-size:12px
-}
-
-.power-value{
-color:var(--cyan);
-font-size:19px;
-direction:ltr
-}
-
-.progress{
-height:8px;
-background:#10231d;
-border-radius:10px;
-overflow:hidden;
-margin:12px 0
-}
-
-.progress div{
-height:100%;
-width:62%;
-background:linear-gradient(90deg,var(--green),var(--cyan));
-border-radius:10px
-}
-
-.ad-card{
-padding:18px;
-background:
-linear-gradient(135deg,rgba(0,217,255,.08),rgba(0,229,138,.06)),
-var(--card)
-}
-
-.ad-head{
-display:flex;
-gap:12px;
-align-items:center
-}
-
-.ad-icon{
-width:46px;
-height:46px;
-border-radius:15px;
-display:grid;
-place-items:center;
-background:rgba(0,217,255,.12);
-font-size:22px
-}
-
-.ad-head h3{
-margin:0;
-font-size:15px
-}
-
-.ad-head p{
-margin:5px 0 0;
-color:var(--muted);
-font-size:11px;
-line-height:1.6
-}
-
-.ad-button{
-width:100%;
-margin-top:15px;
-padding:13px;
-border-radius:14px;
-background:rgba(0,229,138,.12);
-border:1px solid rgba(0,229,138,.3);
-color:var(--green);
-font-weight:bold
-}
-
-.actions{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:8px;
-padding:0 16px
-}
-
-.action{
-padding:13px 5px;
-border-radius:17px;
-background:var(--card);
-border:1px solid var(--border);
-color:white;
-text-align:center
-}
-
-.action-icon{
-display:block;
-font-size:22px;
-margin-bottom:6px
-}
-
-.action span:last-child{
-font-size:10px;
-color:var(--muted)
-}
-
-.ref-card{
-padding:18px;
-background:
-linear-gradient(135deg,rgba(244,201,93,.10),rgba(0,229,138,.06));
-border-color:rgba(244,201,93,.18)
-}
-
-.ref-card h3{
-margin:0 0 6px;
-font-size:15px
-}
-
-.ref-card p{
-margin:0 0 13px;
-color:var(--muted);
-font-size:11px;
-line-height:1.6
-}
-
-.ref-btn{
-width:100%;
-padding:12px;
-border-radius:14px;
-background:rgba(244,201,93,.13);
-color:var(--gold);
-border:1px solid rgba(244,201,93,.25);
-font-weight:bold
-}
-
-.reward-stats{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-margin:12px 16px
-}
-
-.reward-stat{
-padding:15px;
-border-radius:18px;
-background:var(--card);
-border:1px solid var(--border);
-text-align:center
-}
-
-.reward-stat b{
-display:block;
-font-size:20px;
-color:var(--green);
-margin-bottom:5px
-}
-
-.reward-stat span{
-font-size:10px;
-color:var(--muted)
-}
-
-.page{
-display:none
-}
-
-.page.active{
-display:block
-}
-
-.simple-card{
-padding:20px
-}
-
-.plan{
-margin-bottom:12px;
-padding:18px;
-border-radius:20px;
-background:rgba(10,42,32,.85);
-border:1px solid var(--border)
-}
-
-.plan h3{
-margin:0 0 6px
-}
-
-.plan p{
-color:var(--muted);
-font-size:12px;
-line-height:1.7
-}
-
-.plan-price{
-color:var(--green);
-font-size:22px;
-font-weight:900;
-direction:ltr
-}
-
-.task{
-display:flex;
-align-items:center;
-gap:12px;
-padding:14px;
-margin-bottom:10px;
-border-radius:17px;
-background:rgba(10,42,32,.85);
-border:1px solid var(--border)
-}
-
-.task-icon{
-width:42px;
-height:42px;
-border-radius:13px;
-display:grid;
-place-items:center;
-background:rgba(0,229,138,.1);
-font-size:20px
-}
-
-.task-info{
-flex:1
-}
-
-.task-info strong{
-display:block;
-font-size:13px
-}
-
-.task-info small{
-color:var(--muted);
-font-size:10px
-}
-
-.task-btn{
-padding:9px 12px;
-border-radius:10px;
-background:rgba(0,229,138,.12);
-color:var(--green);
-border:1px solid var(--border);
-font-size:11px
-}
-
-.profile-row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 0;
-border-bottom:1px solid rgba(255,255,255,.05)
-}
-
-.profile-row:last-child{
-border-bottom:0
-}
-
-.profile-row span{
-color:var(--muted);
-font-size:12px
-}
-
-.withdraw{
-padding:14px;
-border-radius:17px;
-margin-bottom:10px;
-background:rgba(10,42,32,.85);
-border:1px solid var(--border);
-display:flex;
-justify-content:space-between;
-align-items:center
-}
-
-.withdraw strong{
-font-size:13px
-}
-
-.withdraw small{
-display:block;
-color:var(--muted);
-margin-top:4px
-}
-
-.withdraw button{
-padding:9px 12px;
-border-radius:10px;
-background:var(--green);
-color:#00150d;
-font-weight:bold;
-font-size:11px
-}
-
-.bottom-nav{
-position:fixed;
-bottom:0;
-left:50%;
-transform:translateX(-50%);
-width:100%;
-max-width:520px;
-padding:9px 10px calc(9px + env(safe-area-inset-bottom));
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:5px;
-background:rgba(2,9,7,.95);
-backdrop-filter:blur(18px);
-border-top:1px solid rgba(0,229,138,.12);
-z-index:50
-}
-
-.nav-btn{
-background:transparent;
-color:var(--muted);
-padding:7px 3px;
-border-radius:13px;
-font-size:10px
-}
-
-.nav-btn span{
-display:block;
-font-size:19px;
-margin-bottom:4px
-}
-
-.nav-btn.active{
-color:var(--green);
-background:rgba(0,229,138,.07)
-}
-
-.toast{
-position:fixed;
-top:18px;
-left:50%;
-transform:translate(-50%,-100px);
-background:#0a251c;
-border:1px solid var(--green);
-color:white;
-padding:12px 18px;
-border-radius:14px;
-z-index:100;
-transition:.3s;
-font-size:12px;
-max-width:90%;
-text-align:center
-}
-
-.toast.show{
-transform:translate(-50%,0)
-}
-
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.75);
-z-index:200;
-align-items:flex-end
-}
-
-.modal.show{
-display:flex
-}
-
-.modal-box{
-width:100%;
-max-width:520px;
-margin:auto 0 0;
-background:#071912;
-border:1px solid var(--border);
-border-radius:25px 25px 0 0;
-padding:22px
-}
-
-.modal-box h3{
-margin-top:0
-}
-
-.close-btn{
-width:100%;
-margin-top:12px;
-padding:13px;
-border-radius:13px;
-background:#102a21;
-color:white
-}
+--bg:#020907;--card:rgba(8,29,23,.94);--green:#00e58a;--cyan:#00d9ff;
+--gold:#f4c95d;--text:#fff;--muted:#8fa9a0;--border:rgba(0,229,138,.18)
+}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% -10%,rgba(0,229,138,.16),transparent 35%),var(--bg);color:var(--text);font-family:Arial,sans-serif}
+button{font:inherit;border:0;cursor:pointer}
+.app{max-width:520px;margin:auto;padding-bottom:95px}
+.header{display:flex;align-items:center;justify-content:space-between;padding:18px 16px 10px}
+.user{display:flex;align-items:center;gap:10px}.avatar{width:45px;height:45px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--green),var(--cyan));color:#00150d;font-weight:900;font-size:20px}
+.user-info strong{display:block}.level{display:inline-block;margin-top:4px;padding:3px 8px;border-radius:20px;background:rgba(0,229,138,.12);border:1px solid var(--border);color:var(--green);font-size:10px}
+.notify{width:42px;height:42px;border-radius:14px;background:var(--card);border:1px solid var(--border);color:white}
+.balance-card,.mining-card,.power-card,.ad-card,.ref-card,.simple-card{margin:12px 16px;border-radius:24px;background:var(--card);border:1px solid var(--border)}
+.balance-card{padding:22px;background:linear-gradient(145deg,rgba(0,229,138,.13),rgba(0,217,255,.05)),var(--card)}
+.balance-title{color:var(--muted);font-size:13px}.balance{font-size:34px;font-weight:900;margin:7px 0;direction:ltr;text-align:right}.coin-name{color:var(--green);font-weight:bold}.usd{color:var(--muted);font-size:11px;margin-top:8px}
+.section-title{display:flex;justify-content:space-between;align-items:center;padding:18px 16px 10px}.section-title h2{margin:0;font-size:17px}.section-title span{color:var(--green);font-size:11px}
+.mining-card{padding:24px 18px;text-align:center;background:radial-gradient(circle at center,rgba(0,229,138,.10),transparent 45%),var(--card)}
+.mine-core{width:180px;height:180px;margin:5px auto 15px;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#0a3327 0 38%,#052219 39% 60%,transparent 61%);box-shadow:0 0 25px rgba(0,229,138,.15),inset 0 0 35px rgba(0,229,138,.10)}
+.mine-core:before,.mine-core:after{content:"";position:absolute;inset:5px;border-radius:50%;border:2px solid rgba(0,229,138,.7);border-left-color:transparent;border-bottom-color:transparent;animation:spin 4s linear infinite}
+.mine-core:after{inset:18px;border-color:rgba(0,217,255,.5);border-right-color:transparent;animation-duration:2.5s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}.core-icon{font-size:54px;filter:drop-shadow(0 0 15px rgba(0,229,138,.8))}
+.mining-status{color:var(--green);font-size:13px;font-weight:bold}.rate{font-size:14px;margin-top:7px}.timer{font-size:42px;font-weight:900;letter-spacing:2px;direction:ltr;margin:8px 0 15px}
+.main-btn,.small-btn{width:100%;padding:14px;border-radius:15px;background:linear-gradient(135deg,var(--green),#00b978);color:#00150d;font-weight:900}.main-btn:disabled{opacity:.55;cursor:not-allowed}
+.hint{color:var(--muted);font-size:11px;margin-top:10px;line-height:1.7}
+.power-card{padding:17px}.power-top{display:flex;justify-content:space-between}.power-top span{color:var(--muted);font-size:12px}.power-value{color:var(--cyan);font-size:19px;direction:ltr}
+.progress{height:8px;background:#10231d;border-radius:10px;overflow:hidden;margin:12px 0}.progress div{height:100%;width:62%;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:10px}
+.boost-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:12px 16px}.boost-card{padding:16px;border-radius:20px;background:linear-gradient(135deg,rgba(0,229,138,.10),rgba(0,217,255,.04)),var(--card);border:1px solid var(--border)}
+.boost-card h3{margin:0;font-size:14px}.boost-card p{margin:6px 0;color:var(--muted);font-size:11px;line-height:1.6}.boost-btn{width:100%;padding:12px;border-radius:13px;background:rgba(0,229,138,.12);border:1px solid rgba(0,229,138,.3);color:var(--green);font-weight:900}.boost-btn:disabled{opacity:.5}
+.ad-card{padding:18px;background:linear-gradient(135deg,rgba(0,217,255,.08),rgba(0,229,138,.06)),var(--card)}
+.ad-head{display:flex;gap:12px;align-items:center}.ad-icon{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:rgba(0,217,255,.12);font-size:22px}.ad-head h3{margin:0;font-size:15px}.ad-head p{margin:5px 0 0;color:var(--muted);font-size:11px;line-height:1.6}.ad-button{width:100%;margin-top:15px;padding:13px;border-radius:14px;background:rgba(0,229,138,.12);border:1px solid rgba(0,229,138,.3);color:var(--green);font-weight:bold}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 16px}.action{padding:13px 5px;border-radius:17px;background:var(--card);border:1px solid var(--border);color:white;text-align:center}.action-icon{display:block;font-size:22px;margin-bottom:6px}.action span:last-child{font-size:10px;color:var(--muted)}
+.ref-card{padding:18px;background:linear-gradient(135deg,rgba(244,201,93,.10),rgba(0,229,138,.06));border-color:rgba(244,201,93,.18)}.ref-card h3{margin:0 0 6px;font-size:15px}.ref-card p{margin:0 0 13px;color:var(--muted);font-size:11px;line-height:1.6}.ref-btn{width:100%;padding:12px;border-radius:14px;background:rgba(244,201,93,.13);color:var(--gold);border:1px solid rgba(244,201,93,.25);font-weight:bold}
+.reward-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 16px}.reward-stat{padding:15px;border-radius:18px;background:var(--card);border:1px solid var(--border);text-align:center}.reward-stat b{display:block;font-size:20px;color:var(--green);margin-bottom:5px}.reward-stat span{font-size:10px;color:var(--muted)}
+.page{display:none}.page.active{display:block}.simple-card{padding:20px}.plan{margin-bottom:12px;padding:18px;border-radius:20px;background:rgba(10,42,32,.85);border:1px solid var(--border)}.plan h3{margin:0 0 6px}.plan p{color:var(--muted);font-size:12px;line-height:1.7}.plan-price{color:var(--green);font-size:22px;font-weight:900;direction:ltr}
+.task{display:flex;align-items:center;gap:12px;padding:14px;margin-bottom:10px;border-radius:17px;background:rgba(10,42,32,.85);border:1px solid var(--border)}.task-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(0,229,138,.1);font-size:20px}.task-info{flex:1}.task-info strong{display:block;font-size:13px}.task-info small{color:var(--muted);font-size:10px}.task-btn{padding:9px 12px;border-radius:10px;background:rgba(0,229,138,.12);color:var(--green);border:1px solid var(--border);font-size:11px}
+.profile-row{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.05)}.profile-row:last-child{border-bottom:0}.profile-row span{color:var(--muted);font-size:12px}
+.withdraw{padding:14px;border-radius:17px;margin-bottom:10px;background:rgba(10,42,32,.85);border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}.withdraw strong{font-size:13px}.withdraw small{display:block;color:var(--muted);margin-top:4px}.withdraw button{padding:9px 12px;border-radius:10px;background:var(--green);color:#00150d;font-weight:bold;font-size:11px}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;padding:9px 10px calc(9px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,1fr);gap:5px;background:rgba(2,9,7,.95);backdrop-filter:blur(18px);border-top:1px solid rgba(0,229,138,.12);z-index:50}.nav-btn{background:transparent;color:var(--muted);padding:7px 3px;border-radius:13px;font-size:10px}.nav-btn span{display:block;font-size:19px;margin-bottom:4px}.nav-btn.active{color:var(--green);background:rgba(0,229,138,.07)}
+.toast{position:fixed;top:18px;left:50%;transform:translate(-50%,-100px);background:#0a251c;border:1px solid var(--green);color:white;padding:12px 18px;border-radius:14px;z-index:100;transition:.3s;font-size:12px;max-width:90%;text-align:center}.toast.show{transform:translate(-50%,0)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:flex-end}.modal.show{display:flex}.modal-box{width:100%;max-width:520px;margin:auto 0 0;background:#071912;border:1px solid var(--border);border-radius:25px 25px 0 0;padding:22px}.modal-box h3{margin-top:0}.close-btn{width:100%;margin-top:12px;padding:13px;border-radius:13px;background:#102a21;color:white}
+#splashScreen{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at 50% 45%,rgba(0,229,138,.18),transparent 35%),#020907;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease,visibility .6s ease}
+#splashScreen.hide{opacity:0;visibility:hidden;pointer-events:none}.splash-logo{text-align:center}.splash-v{font-size:76px;font-weight:900;color:var(--green);text-shadow:0 0 10px rgba(0,229,138,.8),0 0 35px rgba(0,217,255,.5)}.splash-name{font-size:30px;font-weight:900;letter-spacing:3px}.splash-welcome{margin-top:12px;color:var(--muted);font-size:12px;letter-spacing:1px}.splash-tag{margin-top:7px;color:var(--green);font-size:12px}
 </style>
 </head>
-
 <body>
+
+<div id="splashScreen">
+  <div class="splash-logo">
+    <div class="splash-v">V</div>
+    <div class="splash-name">VOLIXMini</div>
+    <div class="splash-welcome">WELCOME TO VOLIXMINI</div>
+    <div class="splash-tag">Mine • Watch • Earn</div>
+  </div>
+</div>
 
 <div class="app">
 
-<!-- HOME -->
 <section id="home" class="page active">
-
 <header class="header">
-<div class="user">
-<div class="avatar" id="avatar">V</div>
-<div class="user-info">
-<strong id="username">VOLIX User</strong>
-<span class="level">VIP 0</span>
-</div>
-</div>
-
-<button class="notify" onclick="showToast('🔔 لا توجد إشعارات جديدة')">
-🔔
-</button>
+<div class="user"><div class="avatar" id="avatar">V</div><div class="user-info"><strong id="username">VOLIX User</strong><span class="level">VIP 0</span></div></div>
+<button class="notify" onclick="showToast('🔔 الإشعارات غير مفعلة حاليًا')">🔔</button>
 </header>
 
 <div class="balance-card">
 <div class="balance-title">رصيدك الحالي</div>
-
-<div class="balance">
-<span id="balance">0</span>
-<span class="coin-name"> VOLIX</span>
+<div class="balance"><span id="balance">0</span><span class="coin-name"> VOLIX</span></div>
+<div class="usd">≈ $<span id="usd">0.00</span></div>
 </div>
 
-<div class="usd">
-≈ $<span id="usd">0.00</span>
-</div>
-</div>
-
-<div class="section-title">
-<h2>⛏️ التعدين</h2>
-<span>VOLIX MINER</span>
-</div>
+<div class="section-title"><h2>⛏️ التعدين</h2><span>VOLIX MINER</span></div>
 
 <div class="mining-card">
-
-<div class="mine-core">
-<div class="core-icon">⚡</div>
-</div>
-
-<div class="mining-status" id="miningStatus">
-التعدين متوقف
-</div>
-
-<div class="rate">
-معدل التعدين: <b>+1 VOLIX / دقيقة</b>
-</div>
-
-<div class="timer" id="timer">
-00:00:00
-</div>
-
-<button class="main-btn" id="mineBtn" onclick="startMiningWithAd()">
-🎬 شاهد فيديو وابدأ التعدين
-</button>
-
-<div class="hint">
-شاهد الإعلان بالكامل للحصول على مكافأة وبدء جلسة التعدين.
-</div>
-
+<div class="mine-core"><div class="core-icon">⚡</div></div>
+<div class="mining-status" id="miningStatus">التعدين متوقف</div>
+<div class="rate">معدل التعدين: <b id="rateText">+1 VOLIX / دقيقة</b></div>
+<div class="timer" id="timer">00:00:00</div>
+<button class="main-btn" id="mineBtn" onclick="startMiningWithAd()">🎬 شاهد فيديو وابدأ التعدين</button>
+<div class="hint" id="mineHint">شاهد الإعلان بالكامل لبدء جلسة تعدين مدتها ساعة.</div>
 </div>
 
 <div class="power-card">
-
-<div class="power-top">
-<span>⚡ قوة التعدين</span>
-<div class="power-value">62%</div>
+<div class="power-top"><span>⚡ قوة التعدين</span><div class="power-value" id="powerValue">62%</div></div>
+<div class="progress"><div id="powerBar"></div></div>
+<div style="color:var(--muted);font-size:10px">استخدم مكافآت الإعلانات لرفع سرعة التعدين.</div>
 </div>
 
-<div class="progress">
-<div></div>
-</div>
+<div class="section-title"><h2>🚀 عزز أرباحك</h2><span>Reward Ads</span></div>
 
-<div style="color:var(--muted);font-size:10px">
-حافظ على نشاطك لإبقاء قوة التعدين مرتفعة.
+<div class="boost-grid">
+<div class="boost-card">
+<h3>⚡ مضاعفة ربح التعدين ×2</h3>
+<p>شاهد إعلانًا واحصل على ضعف معدل التعدين لمدة ساعة.</p>
+<button class="boost-btn" id="doubleBtn" onclick="watchBoostAd('double')">🎬 شاهد الإعلان ×2</button>
 </div>
-
+<div class="boost-card">
+<h3>🎁 بونص فوري +50 VOLIX</h3>
+<p>شاهد إعلانًا كاملًا واحصل على 50 VOLIX مباشرة.</p>
+<button class="boost-btn" id="bonusBtn" onclick="watchBoostAd('bonus')">🎬 شاهد الإعلان +50</button>
 </div>
-
-<div class="section-title">
-<h2>📺 مركز المكافآت</h2>
-<span>Reward Ads</span>
+<div class="boost-card">
+<h3>🚀 سرعة التعدين ×3</h3>
+<p>شاهد إعلانًا واحصل على سرعة تعدين ×3 لمدة 30 دقيقة.</p>
+<button class="boost-btn" id="speedBtn" onclick="watchBoostAd('speed')">🎬 شاهد الإعلان ×3</button>
+</div>
 </div>
 
 <div class="reward-stats">
-
-<div class="reward-stat">
-<b id="adsToday">0</b>
-<span>إعلانات اليوم</span>
-</div>
-
-<div class="reward-stat">
-<b>+10</b>
-<span>VOLIX لكل إعلان</span>
-</div>
-
+<div class="reward-stat"><b id="adsToday">0</b><span>إعلانات اليوم</span></div>
+<div class="reward-stat"><b id="currentRate">+1</b><span>VOLIX / دقيقة</span></div>
 </div>
 
 <div class="ad-card">
-
-<div class="ad-head">
-
-<div class="ad-icon">🎬</div>
-
-<div>
-<h3>شاهد فيديو واربح</h3>
-<p>
-شاهد إعلان Reward بالكامل واحصل على 10 VOLIX.
-</p>
-</div>
-
-</div>
-
-<button class="ad-button" id="rewardAdBtn" onclick="watchRewardAd()">
-▶ مشاهدة الإعلان +10 VOLIX
-</button>
-
+<div class="ad-head"><div class="ad-icon">🎬</div><div><h3>شاهد فيديو واربح</h3><p>الإعلان العادي يمنحك +10 VOLIX بعد إكمال المشاهدة.</p></div></div>
+<button class="ad-button" id="rewardAdBtn" onclick="watchRewardAd()">▶ مشاهدة الإعلان +10 VOLIX</button>
 </div>
 
 <div class="actions">
-
-<button class="action" onclick="openPage('tasks')">
-<span class="action-icon">🎯</span>
-<span>المهام</span>
-</button>
-
-<button class="action" onclick="openPage('vip')">
-<span class="action-icon">👑</span>
-<span>VIP</span>
-</button>
-
-<button class="action" onclick="openPage('withdraw')">
-<span class="action-icon">💳</span>
-<span>السحب</span>
-</button>
-
-<button class="action" onclick="openPage('profile')">
-<span class="action-icon">👤</span>
-<span>حسابي</span>
-</button>
-
+<button class="action" onclick="openPage('tasks')"><span class="action-icon">🎯</span><span>المهام</span></button>
+<button class="action" onclick="openPage('vip')"><span class="action-icon">👑</span><span>VIP</span></button>
+<button class="action" onclick="openPage('withdraw')"><span class="action-icon">💳</span><span>السحب</span></button>
+<button class="action" onclick="openPage('profile')"><span class="action-icon">👤</span><span>حسابي</span></button>
 </div>
 
 <div class="ref-card">
-
-<h3>🎁 ادعُ أصدقاءك</h3>
-
-<p>
-شارك رابط الإحالة واحصل على مكافآت عند انضمام أصدقائك.
-</p>
-
-<button class="ref-btn" onclick="copyReferral()">
-📋 نسخ رابط الدعوة
-</button>
-
+<h3>🎁 ادعُ أصدقاءك</h3><p>شارك رابط الإحالة واحصل على مكافآت عند انضمام أصدقائك.</p>
+<button class="ref-btn" onclick="copyReferral()">📋 نسخ رابط الدعوة</button>
 </div>
-
 </section>
 
-
-<!-- TASKS -->
 <section id="tasks" class="page">
-
-<div class="section-title">
-<h2>🎯 المهام</h2>
-<span>اربح VOLIX</span>
-</div>
-
+<div class="section-title"><h2>🎯 المهام</h2><span>اربح VOLIX</span></div>
 <div class="simple-card">
-
-<div class="task">
-
-<div class="task-icon">📺</div>
-
-<div class="task-info">
-<strong>شاهد إعلان</strong>
-<small>احصل على 10 VOLIX</small>
+<div class="task"><div class="task-icon">📺</div><div class="task-info"><strong>شاهد إعلان</strong><small>احصل على 10 VOLIX</small></div><button class="task-btn" onclick="watchRewardAd()">ابدأ</button></div>
+<div class="task"><div class="task-icon">📢</div><div class="task-info"><strong>تابع القناة</strong><small>مكافأة 25 VOLIX</small></div><button class="task-btn" onclick="completeTask(this,25)">تحقق</button></div>
+<div class="task"><div class="task-icon">⭐</div><div class="task-info"><strong>مهمة يومية</strong><small>مكافأة 50 VOLIX</small></div><button class="task-btn" onclick="completeTask(this,50)">استلام</button></div>
+<div class="task"><div class="task-icon">🔥</div><div class="task-info"><strong>نشاط يومي</strong><small>مكافأة 20 VOLIX</small></div><button class="task-btn" onclick="completeTask(this,20)">استلام</button></div>
 </div>
-
-<button class="task-btn" onclick="watchRewardAd()">
-ابدأ
-</button>
-
-</div>
-
-<div class="task">
-
-<div class="task-icon">📢</div>
-
-<div class="task-info">
-<strong>تابع القناة</strong>
-<small>مكافأة 25 VOLIX</small>
-</div>
-
-<button class="task-btn" onclick="completeTask(this,25)">
-تحقق
-</button>
-
-</div>
-
-<div class="task">
-
-<div class="task-icon">⭐</div>
-
-<div class="task-info">
-<strong>مهمة يومية</strong>
-<small>مكافأة 50 VOLIX</small>
-</div>
-
-<button class="task-btn" onclick="completeTask(this,50)">
-استلام
-</button>
-
-</div>
-
-<div class="task">
-
-<div class="task-icon">🔥</div>
-
-<div class="task-info">
-<strong>نشاط يومي</strong>
-<small>مكافأة 20 VOLIX</small>
-</div>
-
-<button class="task-btn" onclick="completeTask(this,20)">
-استلام
-</button>
-
-</div>
-
-</div>
-
 </section>
 
-
-<!-- VIP -->
 <section id="vip" class="page">
-
-<div class="section-title">
-<h2>👑 VIP</h2>
-<span>خطط VOLIX</span>
-</div>
-
+<div class="section-title"><h2>👑 VIP</h2><span>خطط VOLIX</span></div>
 <div class="simple-card">
-
-<div class="plan">
-
-<h3>VIP 0 — مجاني</h3>
-
-<p>
-الخطة الأساسية لجميع المستخدمين.
-</p>
-
-<div class="plan-price">
-$0
+<div class="plan"><h3>VIP 0 — مجاني</h3><p>الخطة الأساسية لجميع المستخدمين.</p><div class="plan-price">$0</div><button class="main-btn" style="margin-top:12px" onclick="showToast('أنت على VIP 0')">الخطة الحالية</button></div>
+<div class="plan"><h3>VIP 1 ⚡</h3><p>معدل تعدين أعلى ومكافآت يومية أفضل.</p><div class="plan-price">$5</div><button class="main-btn" style="margin-top:12px" onclick="showToast('سيتم تفعيل الدفع لاحقًا')">ترقية</button></div>
+<div class="plan"><h3>VIP 2 🔥</h3><p>مكافآت أعلى وقوة تعدين أكبر.</p><div class="plan-price">$10</div><button class="main-btn" style="margin-top:12px" onclick="showToast('سيتم تفعيل الدفع لاحقًا')">ترقية</button></div>
 </div>
-
-<button class="main-btn" style="margin-top:12px"
-onclick="showToast('أنت على VIP 0')">
-الخطة الحالية
-</button>
-
-</div>
-
-<div class="plan">
-
-<h3>VIP 1 ⚡</h3>
-
-<p>
-معدل تعدين أعلى ومكافآت يومية أفضل.
-</p>
-
-<div class="plan-price">
-$5
-</div>
-
-<button class="main-btn" style="margin-top:12px"
-onclick="showToast('سيتم تفعيل الدفع لاحقًا')">
-ترقية
-</button>
-
-</div>
-
-<div class="plan">
-
-<h3>VIP 2 🔥</h3>
-
-<p>
-مكافآت أعلى وقوة تعدين أكبر.
-</p>
-
-<div class="plan-price">
-$10
-</div>
-
-<button class="main-btn" style="margin-top:12px"
-onclick="showToast('سيتم تفعيل الدفع لاحقًا')">
-ترقية
-</button>
-
-</div>
-
-</div>
-
 </section>
 
-
-<!-- WITHDRAW -->
 <section id="withdraw" class="page">
-
-<div class="section-title">
-<h2>💳 السحب</h2>
-<span>محفظتك</span>
-</div>
-
+<div class="section-title"><h2>💳 السحب</h2><span>محفظتك</span></div>
 <div class="simple-card">
-
-<div style="text-align:center;margin-bottom:20px">
-
-<div style="color:var(--muted);font-size:12px">
-الرصيد المتاح
+<div style="text-align:center;margin-bottom:20px"><div style="color:var(--muted);font-size:12px">الرصيد المتاح</div><div style="font-size:30px;font-weight:900;margin-top:5px"><span id="withdrawBalance">0</span> VOLIX</div></div>
+<div class="withdraw"><div><strong>💵 Vodafone Cash</strong><small>الحد الأدنى: 1000 VOLIX</small></div><button onclick="requestWithdraw('Vodafone Cash')">سحب</button></div>
+<div class="withdraw"><div><strong>🟠 Orange Money</strong><small>الحد الأدنى: 1000 VOLIX</small></div><button onclick="requestWithdraw('Orange Money')">سحب</button></div>
+<div class="withdraw"><div><strong>🟢 Etisalat Cash</strong><small>الحد الأدنى: 1000 VOLIX</small></div><button onclick="requestWithdraw('Etisalat Cash')">سحب</button></div>
+<div class="withdraw"><div><strong>💎 USDT</strong><small>TRC20 — الحد الأدنى: 1000 VOLIX</small></div><button onclick="requestWithdraw('USDT')">سحب</button></div>
 </div>
-
-<div style="font-size:30px;font-weight:900;margin-top:5px">
-<span id="withdrawBalance">0</span> VOLIX
-</div>
-
-</div>
-
-<div class="withdraw">
-
-<div>
-<strong>💵 Vodafone Cash</strong>
-<small>الحد الأدنى: 1000 VOLIX</small>
-</div>
-
-<button onclick="requestWithdraw('Vodafone Cash')">
-سحب
-</button>
-
-</div>
-
-<div class="withdraw">
-
-<div>
-<strong>🟠 Orange Money</strong>
-<small>الحد الأدنى: 1000 VOLIX</small>
-</div>
-
-<button onclick="requestWithdraw('Orange Money')">
-سحب
-</button>
-
-</div>
-
-<div class="withdraw">
-
-<div>
-<strong>🟢 Etisalat Cash</strong>
-<small>الحد الأدنى: 1000 VOLIX</small>
-</div>
-
-<button onclick="requestWithdraw('Etisalat Cash')">
-سحب
-</button>
-
-</div>
-
-<div class="withdraw">
-
-<div>
-<strong>💎 USDT</strong>
-<small>TRC20 — الحد الأدنى: 1000 VOLIX</small>
-</div>
-
-<button onclick="requestWithdraw('USDT')">
-سحب
-</button>
-
-</div>
-
-</div>
-
 </section>
 
-
-<!-- PROFILE -->
 <section id="profile" class="page">
-
-<div class="section-title">
-<h2>👤 حسابي</h2>
-<span>الملف الشخصي</span>
-</div>
-
+<div class="section-title"><h2>👤 حسابي</h2><span>الملف الشخصي</span></div>
 <div class="simple-card">
-
-<div style="text-align:center;margin-bottom:20px">
-
-<div class="avatar"
-style="margin:auto;width:70px;height:70px;font-size:30px"
-id="profileAvatar">
-V
+<div style="text-align:center;margin-bottom:20px"><div class="avatar" style="margin:auto;width:70px;height:70px;font-size:30px" id="profileAvatar">V</div><h3 id="profileName">VOLIX User</h3><span class="level">VIP 0</span></div>
+<div class="profile-row"><strong>🆔 معرف المستخدم</strong><span id="userId">غير متاح</span></div>
+<div class="profile-row"><strong>💰 الرصيد</strong><span><span id="profileBalance">0</span> VOLIX</span></div>
+<div class="profile-row"><strong>📺 إعلانات اليوم</strong><span id="profileAds">0</span></div>
+<div class="profile-row"><strong>👥 الإحالات</strong><span>0</span></div>
+<div class="profile-row"><strong>🏆 المستوى</strong><span>VIP 0</span></div>
+<button class="main-btn" style="margin-top:18px" onclick="copyReferral()">📋 نسخ رابط الإحالة</button>
 </div>
-
-<h3 id="profileName">
-VOLIX User
-</h3>
-
-<span class="level">
-VIP 0
-</span>
-
-</div>
-
-<div class="profile-row">
-<strong>🆔 معرف المستخدم</strong>
-<span id="userId">غير متاح</span>
-</div>
-
-<div class="profile-row">
-<strong>💰 الرصيد</strong>
-<span>
-<span id="profileBalance">0</span> VOLIX
-</span>
-</div>
-
-<div class="profile-row">
-<strong>📺 إعلانات اليوم</strong>
-<span id="profileAds">0</span>
-</div>
-
-<div class="profile-row">
-<strong>👥 الإحالات</strong>
-<span>0</span>
-</div>
-
-<div class="profile-row">
-<strong>🏆 المستوى</strong>
-<span>VIP 0</span>
-</div>
-
-<button class="main-btn"
-style="margin-top:18px"
-onclick="copyReferral()">
-📋 نسخ رابط الإحالة
-</button>
-
-</div>
-
 </section>
-
 </div>
 
-
-<!-- NAVIGATION -->
 <nav class="bottom-nav">
-
-<button class="nav-btn active"
-data-page="home"
-onclick="openPage('home')">
-<span>🏠</span>
-الرئيسية
-</button>
-
-<button class="nav-btn"
-data-page="tasks"
-onclick="openPage('tasks')">
-<span>🎯</span>
-المهام
-</button>
-
-<button class="nav-btn"
-data-page="vip"
-onclick="openPage('vip')">
-<span>👑</span>
-VIP
-</button>
-
-<button class="nav-btn"
-data-page="withdraw"
-onclick="openPage('withdraw')">
-<span>💳</span>
-السحب
-</button>
-
-<button class="nav-btn"
-data-page="profile"
-onclick="openPage('profile')">
-<span>👤</span>
-حسابي
-</button>
-
+<button class="nav-btn active" data-page="home" onclick="openPage('home')"><span>🏠</span>الرئيسية</button>
+<button class="nav-btn" data-page="tasks" onclick="openPage('tasks')"><span>🎯</span>المهام</button>
+<button class="nav-btn" data-page="vip" onclick="openPage('vip')"><span>👑</span>VIP</button>
+<button class="nav-btn" data-page="withdraw" onclick="openPage('withdraw')"><span>💳</span>السحب</button>
+<button class="nav-btn" data-page="profile" onclick="openPage('profile')"><span>👤</span>حسابي</button>
 </nav>
 
-
 <div class="toast" id="toast"></div>
-
-
-<div class="modal" id="modal">
-
-<div class="modal-box">
-
-<h3 id="modalTitle">
-VOLIXMini
-</h3>
-
-<p id="modalText"
-style="color:var(--muted);font-size:12px;line-height:1.8;white-space:pre-line">
-</p>
-
-<button class="main-btn"
-onclick="closeModal()">
-حسنًا
-</button>
-
-</div>
-
-</div>
-
+<div class="modal" id="modal"><div class="modal-box"><h3 id="modalTitle">VOLIXMini</h3><p id="modalText" style="color:var(--muted);font-size:12px;line-height:1.8;white-space:pre-line"></p><button class="main-btn" onclick="closeModal()">حسنًا</button></div></div>
 
 <script>
+const ADSGRAM_BLOCK_ID="43766";
+const MINING_DURATION=3600;
+const BASE_RATE_PER_MINUTE=1;
+const NORMAL_AD_REWARD=10;
+const BONUS_REWARD=50;
+const DOUBLE_DURATION=3600;
+const SPEED_DURATION=1800;
+const DOUBLE_MULTIPLIER=2;
+const SPEED_MULTIPLIER=3;
+const BOOST_COOLDOWN=3600;
 
-const ADSGRAM_BLOCK_ID = "43766";
+const tg=window.Telegram&&window.Telegram.WebApp?window.Telegram.WebApp:null;
+if(tg){tg.ready();tg.expand();}
 
-const tg =
-window.Telegram &&
-window.Telegram.WebApp
-? window.Telegram.WebApp
-: null;
+let AdController=null;
+let adLoading=false;
 
-if(tg){
-tg.ready();
-tg.expand();
-}
+let balance=Number(localStorage.getItem("volix_balance")||0);
+let mining=localStorage.getItem("volix_mining")==="true";
+let miningStart=Number(localStorage.getItem("volix_mining_start")||0);
+let miningSeconds=Number(localStorage.getItem("volix_mining_seconds")||0);
+let miningLastCreditMinute=Number(localStorage.getItem("volix_mining_last_credit_minute")||0);
 
+let adsToday=Number(localStorage.getItem("volix_ads_today")||0);
+let adsDate=localStorage.getItem("volix_ads_date")||"";
 
-/* =========================
-   ADSGRAM
-========================= */
+let doubleUntil=Number(localStorage.getItem("volix_double_until")||0);
+let speedUntil=Number(localStorage.getItem("volix_speed_until")||0);
+let lastDoubleAd=Number(localStorage.getItem("volix_last_double_ad")||0);
+let lastBonusAd=Number(localStorage.getItem("volix_last_bonus_ad")||0);
+let lastSpeedAd=Number(localStorage.getItem("volix_last_speed_ad")||0);
 
-let AdController = null;
+let miningTimer=null;
 
 function initAdsgram(){
-
-if(!window.Adsgram){
-
-console.log("AdsGram SDK لم يتم تحميله");
-
-return false;
-
+ if(!window.Adsgram){console.log("AdsGram SDK لم يتم تحميله");return false;}
+ try{AdController=window.Adsgram.init({blockId:ADSGRAM_BLOCK_ID});return true;}
+ catch(e){console.error("AdsGram initialization error:",e);return false;}
 }
-
-try{
-
-AdController =
-window.Adsgram.init({
-blockId: ADSGRAM_BLOCK_ID
-});
-
-console.log(
-"AdsGram initialized:",
-ADSGRAM_BLOCK_ID
-);
-
-return true;
-
-}catch(error){
-
-console.error(
-"AdsGram initialization error:",
-error
-);
-
-return false;
-
-}
-
-}
-
-
-/* =========================
-   STORAGE
-========================= */
-
-let balance =
-Number(
-localStorage.getItem("volix_balance") || 0
-);
-
-let mining =
-localStorage.getItem("volix_mining") === "true";
-
-let miningSeconds =
-Number(
-localStorage.getItem("volix_mining_seconds") || 0
-);
-
-let adsToday =
-Number(
-localStorage.getItem("volix_ads_today") || 0
-);
-
-let adsDate =
-localStorage.getItem("volix_ads_date") || "";
-
-let miningTimer = null;
-
-let adLoading = false;
-
-
-/* =========================
-   DAILY ADS RESET
-========================= */
 
 function checkAdsDate(){
-
-const today =
-new Date().toISOString().slice(0,10);
-
-if(adsDate !== today){
-
-adsDate = today;
-adsToday = 0;
-
-localStorage.setItem(
-"volix_ads_date",
-adsDate
-);
-
-localStorage.setItem(
-"volix_ads_today",
-"0"
-);
-
+ const today=new Date().toISOString().slice(0,10);
+ if(adsDate!==today){
+  adsDate=today;adsToday=0;
+  localStorage.setItem("volix_ads_date",adsDate);
+  localStorage.setItem("volix_ads_today","0");
+ }
 }
-
-}
-
-
-/* =========================
-   SAVE
-========================= */
 
 function save(){
-
-localStorage.setItem(
-"volix_balance",
-balance
-);
-
-localStorage.setItem(
-"volix_mining_seconds",
-miningSeconds
-);
-
-localStorage.setItem(
-"volix_mining",
-mining
-? "true"
-: "false"
-);
-
-localStorage.setItem(
-"volix_ads_today",
-adsToday
-);
-
-localStorage.setItem(
-"volix_ads_date",
-adsDate
-);
-
+ localStorage.setItem("volix_balance",String(balance));
+ localStorage.setItem("volix_mining",mining?"true":"false");
+ localStorage.setItem("volix_mining_start",String(miningStart));
+ localStorage.setItem("volix_mining_seconds",String(miningSeconds));
+ localStorage.setItem("volix_mining_last_credit_minute",String(miningLastCreditMinute));
+ localStorage.setItem("volix_ads_today",String(adsToday));
+ localStorage.setItem("volix_ads_date",adsDate);
+ localStorage.setItem("volix_double_until",String(doubleUntil));
+ localStorage.setItem("volix_speed_until",String(speedUntil));
+ localStorage.setItem("volix_last_double_ad",String(lastDoubleAd));
+ localStorage.setItem("volix_last_bonus_ad",String(lastBonusAd));
+ localStorage.setItem("volix_last_speed_ad",String(lastSpeedAd));
 }
-
-
-/* =========================
-   BALANCE
-========================= */
 
 function updateBalance(){
-
-const balanceElement =
-document.getElementById("balance");
-
-const usdElement =
-document.getElementById("usd");
-
-const withdrawElement =
-document.getElementById("withdrawBalance");
-
-const profileElement =
-document.getElementById("profileBalance");
-
-if(balanceElement)
-balanceElement.textContent =
-balance;
-
-if(usdElement)
-usdElement.textContent =
-(balance / 1000).toFixed(2);
-
-if(withdrawElement)
-withdrawElement.textContent =
-balance;
-
-if(profileElement)
-profileElement.textContent =
-balance;
-
+ const ids=["balance","withdrawBalance","profileBalance"];
+ ids.forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=balance;});
+ const usd=document.getElementById("usd");if(usd)usd.textContent=(balance/1000).toFixed(2);
 }
-
-
-/* =========================
-   ADS COUNTER
-========================= */
 
 function updateAdCounter(){
-
-checkAdsDate();
-
-const adsElement =
-document.getElementById("adsToday");
-
-const profileAds =
-document.getElementById("profileAds");
-
-if(adsElement)
-adsElement.textContent =
-adsToday;
-
-if(profileAds)
-profileAds.textContent =
-adsToday;
-
+ checkAdsDate();
+ const a=document.getElementById("adsToday"),p=document.getElementById("profileAds");
+ if(a)a.textContent=adsToday;if(p)p.textContent=adsToday;
 }
-
-
-/* =========================
-   TIMER
-========================= */
 
 function formatTime(seconds){
-
-const h =
-Math.floor(seconds / 3600);
-
-const m =
-Math.floor(
-(seconds % 3600) / 60
-);
-
-const s =
-seconds % 60;
-
-return (
-String(h).padStart(2,"0")
-+
-":"
-+
-String(m).padStart(2,"0")
-+
-":"
-+
-String(s).padStart(2,"0")
-);
-
+ seconds=Math.max(0,Math.floor(seconds));
+ const h=Math.floor(seconds/3600),m=Math.floor((seconds%3600)/60),s=seconds%60;
+ return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
 }
 
+function getMultiplier(){
+ const now=Date.now();
+ if(now<speedUntil)return SPEED_MULTIPLIER;
+ if(now<doubleUntil)return DOUBLE_MULTIPLIER;
+ return 1;
+}
+
+function getRatePerMinute(){
+ return BASE_RATE_PER_MINUTE*getMultiplier();
+}
+
+function updateBoostUI(){
+ const now=Date.now();
+ const mult=getMultiplier();
+ const rate=document.getElementById("currentRate");
+ const rateText=document.getElementById("rateText");
+ const power=document.getElementById("powerValue");
+ const bar=document.getElementById("powerBar");
+ if(rate)rate.textContent="+"+getRatePerMinute();
+ if(rateText)rateText.textContent="+"+getRatePerMinute()+" VOLIX / دقيقة";
+ if(power)power.textContent=(mult===3?"100%":mult===2?"85%":"62")+"%";
+ if(bar)bar.style.width=(mult===3?"100%":mult===2?"85%":"62")+"%";
+
+ setCooldownButton("doubleBtn",lastDoubleAd,DOUBLE_DURATION,"⚡ ×2 نشط");
+ setCooldownButton("bonusBtn",lastBonusAd,BOOST_COOLDOWN,"🎁 البونص متاح بعد");
+ setCooldownButton("speedBtn",lastSpeedAd,SPEED_DURATION,"🚀 ×3 نشط");
+
+ if(mult===3) document.getElementById("mineHint").textContent="🚀 سرعة ×3 مفعلة لمدة محدودة.";
+ else if(mult===2) document.getElementById("mineHint").textContent="⚡ مضاعفة الربح ×2 مفعلة لمدة محدودة.";
+ else document.getElementById("mineHint").textContent="شاهد الإعلان بالكامل لبدء جلسة تعدين مدتها ساعة.";
+}
+
+function setCooldownButton(id,lastTime,duration,activeText){
+ const btn=document.getElementById(id);if(!btn)return;
+ const now=Date.now();
+ if(now-lastTime<BOOST_COOLDOWN){
+  const left=Math.ceil((BOOST_COOLDOWN-(now-lastTime))/1000);
+  btn.disabled=true;
+  btn.textContent=activeText+" "+formatTime(left);
+ }else{
+  btn.disabled=false;
+  if(id==="doubleBtn")btn.textContent="🎬 شاهد الإعلان ×2";
+  if(id==="bonusBtn")btn.textContent="🎬 شاهد الإعلان +50";
+  if(id==="speedBtn")btn.textContent="🎬 شاهد الإعلان ×3";
+ }
+}
+
+function creditMining(){
+ if(!mining||!miningStart)return;
+
+ const now=Date.now();
+ let elapsed=Math.floor((now-miningStart)/1000);
+ elapsed=Math.max(0,Math.min(elapsed,MINING_DURATION));
+
+ const minute=Math.floor(elapsed/60);
+ if(minute>miningLastCreditMinute){
+  const minutesToCredit=minute-miningLastCreditMinute;
+  balance+=minutesToCredit*getRatePerMinute();
+  miningLastCreditMinute=minute;
+ }
+ miningSeconds=elapsed;
+
+ if(elapsed>=MINING_DURATION){
+  miningSeconds=MINING_DURATION;
+  mining=false;
+  miningStart=0;
+  showToast("⏱️ انتهت جلسة التعدين! شاهد إعلانًا لبدء جلسة جديدة.");
+ }
+
+ save();
+ updateBalance();
+ updateMiningUI();
+}
 
 function updateTimer(){
-
-const timer =
-document.getElementById("timer");
-
-if(timer)
-timer.textContent =
-formatTime(miningSeconds);
-
+ creditMining();
+ const timer=document.getElementById("timer");
+ if(timer)timer.textContent=formatTime(miningSeconds>=MINING_DURATION?0:MINING_DURATION-miningSeconds);
 }
-
-
-/* =========================
-   MINING
-========================= */
 
 function beginMining(){
-
-if(mining){
-
-updateMiningUI();
-
-return;
-
+ if(mining){updateMiningUI();return;}
+ mining=true;
+ miningStart=Date.now();
+ miningSeconds=0;
+ miningLastCreditMinute=0;
+ save();
+ updateMiningUI();
+ showToast("⛏️ بدأ التعدين لمدة ساعة!");
+ startMiningTimer();
 }
-
-mining = true;
-
-document.getElementById(
-"miningStatus"
-).textContent =
-"⚡ التعدين يعمل الآن";
-
-document.getElementById(
-"mineBtn"
-).textContent =
-"⏸ إيقاف التعدين";
-
-document.getElementById(
-"mineBtn"
-).disabled = false;
-
-showToast(
-"⛏️ بدأ التعدين!"
-);
-
-save();
-
-startMiningTimer();
-
-}
-
 
 function startMiningTimer(){
-
-if(miningTimer)
-clearInterval(miningTimer);
-
-miningTimer =
-setInterval(function(){
-
-if(!mining)
-return;
-
-miningSeconds++;
-
-if(
-miningSeconds % 60 === 0
-){
-
-balance += 1;
-
-updateBalance();
-
-showToast(
-"⚡ +1 VOLIX"
-);
-
+ if(miningTimer)clearInterval(miningTimer);
+ miningTimer=setInterval(updateTimer,1000);
 }
-
-updateTimer();
-
-save();
-
-},1000);
-
-}
-
 
 function stopMining(){
-
-mining = false;
-
-if(miningTimer){
-
-clearInterval(
-miningTimer
-);
-
-miningTimer = null;
-
+ creditMining();
+ mining=false;miningStart=0;miningSeconds=0;miningLastCreditMinute=0;
+ if(miningTimer){clearInterval(miningTimer);miningTimer=null;}
+ save();updateMiningUI();updateTimer();
+ showToast("⏸️ تم إيقاف التعدين");
 }
-
-document.getElementById(
-"miningStatus"
-).textContent =
-"التعدين متوقف";
-
-document.getElementById(
-"mineBtn"
-).textContent =
-"🎬 شاهد فيديو وابدأ التعدين";
-
-save();
-
-showToast(
-"⏸️ تم إيقاف التعدين"
-);
-
-}
-
 
 function updateMiningUI(){
+ const status=document.getElementById("miningStatus"),button=document.getElementById("mineBtn");
+ if(!status||!button)return;
 
-const status =
-document.getElementById(
-"miningStatus"
-);
-
-const button =
-document.getElementById(
-"mineBtn"
-);
-
-if(mining){
-
-status.textContent =
-"⚡ التعدين يعمل الآن";
-
-button.textContent =
-"⏸ إيقاف التعدين";
-
-if(!miningTimer)
-startMiningTimer();
-
-}else{
-
-status.textContent =
-"التعدين متوقف";
-
-button.textContent =
-"🎬 شاهد فيديو وابدأ التعدين";
-
+ if(mining){
+  status.textContent="⚡ التعدين يعمل الآن";
+  button.textContent="⏳ التعدين يعمل...";
+  button.disabled=true;
+ }else{
+  if(miningSeconds>=MINING_DURATION){
+   status.textContent="🏁 انتهت جلسة التعدين";
+   button.textContent="🎬 شاهد فيديو وابدأ جلسة جديدة";
+  }else{
+   status.textContent="التعدين متوقف";
+   button.textContent="🎬 شاهد فيديو وابدأ التعدين";
+  }
+  button.disabled=false;
+ }
 }
-
-}
-
-
-function toggleMining(){
-
-if(mining){
-
-stopMining();
-
-}else{
-
-startMiningWithAd();
-
-}
-
-}
-
-
-/* =========================
-   REWARDED AD
-========================= */
 
 async function showRewardAd(){
+ checkAdsDate();
+ if(adLoading){showToast("⏳ الإعلان قيد التحميل...");return false;}
+ if(!window.Adsgram){
+  showModal("⚠️ AdsGram","لم يتم تحميل نظام الإعلانات. افتح VOLIXMini من داخل Telegram ثم أعد المحاولة.");
+  return false;
+ }
+ if(!AdController&&!initAdsgram()){showToast("❌ تعذر تشغيل الإعلانات");return false;}
 
-checkAdsDate();
+ adLoading=true;
+ const main=document.getElementById("mineBtn"),normal=document.getElementById("rewardAdBtn");
+ if(main)main.disabled=true;if(normal){normal.disabled=true;normal.textContent="⏳ جاري تحميل الإعلان...";}
 
-if(adLoading){
-
-showToast(
-"⏳ الإعلان قيد التحميل..."
-);
-
-return false;
-
+ try{
+  const result=await AdController.show();
+  if(result&&result.done===true){
+   adsToday++;updateAdCounter();save();return true;
+  }
+  showToast("⚠️ لم تكتمل مشاهدة الإعلان");return false;
+ }catch(e){
+  console.error("AdsGram show error:",e);showToast("❌ تعذر تشغيل الإعلان");return false;
+ }finally{
+  adLoading=false;
+  if(normal){normal.disabled=false;normal.textContent="▶ مشاهدة الإعلان +10 VOLIX";}
+  updateMiningUI();
+ }
 }
-
-if(!window.Adsgram){
-
-showModal(
-"⚠️ AdsGram",
-"لم يتم تحميل نظام الإعلانات.\nتأكد أنك تفتح VOLIXMini من داخل Telegram ثم أعد المحاولة."
-);
-
-return false;
-
-}
-
-if(!AdController){
-
-const initialized =
-initAdsgram();
-
-if(!initialized){
-
-showToast(
-"❌ تعذر تشغيل الإعلانات"
-);
-
-return false;
-
-}
-
-}
-
-adLoading = true;
-
-const button =
-document.getElementById(
-"rewardAdBtn"
-);
-
-const mineButton =
-document.getElementById(
-"mineBtn"
-);
-
-if(button){
-
-button.disabled = true;
-button.textContent =
-"⏳ جاري تحميل الإعلان...";
-}
-
-if(mineButton){
-
-mineButton.disabled = true;
-
-}
-
-try{
-
-const result =
-await AdController.show();
-
-/*
-AdsGram Reward:
-result.done === true
-يعني الإعلان اكتمل.
-*/
-
-if(
-result &&
-result.done === true
-){
-
-balance += 10;
-
-adsToday++;
-
-updateBalance();
-updateAdCounter();
-
-save();
-
-showToast(
-"🎉 +10 VOLIX — تمت المكافأة"
-);
-
-return true;
-
-}
-
-showToast(
-"⚠️ لم تكتمل مشاهدة الإعلان"
-);
-
-return false;
-
-}catch(error){
-
-console.error(
-"AdsGram show error:",
-error
-);
-
-showToast(
-"❌ تعذر تشغيل الإعلان"
-);
-
-return false;
-
-}finally{
-
-adLoading = false;
-
-if(button){
-
-button.disabled = false;
-
-button.textContent =
-"▶ مشاهدة الإعلان +10 VOLIX";
-
-}
-
-if(mineButton){
-
-mineButton.disabled = false;
-
-}
-
-}
-
-}
-
-
-/* =========================
-   START MINING WITH AD
-========================= */
 
 async function startMiningWithAd(){
-
-if(mining){
-
-stopMining();
-
-return;
-
+ if(mining)return;
+ const rewarded=await showRewardAd();
+ if(!rewarded)return;
+ balance+=NORMAL_AD_REWARD;
+ updateBalance();
+ beginMining();
+ showToast("🎉 +10 VOLIX وبدأ التعدين!");
+ save();
 }
-
-const rewarded =
-await showRewardAd();
-
-if(!rewarded){
-
-return;
-
-}
-
-/*
-المستخدم شاهد الإعلان بالكامل.
-الآن فقط يبدأ التعدين.
-*/
-
-beginMining();
-
-}
-
-
-/* =========================
-   NORMAL REWARD BUTTON
-========================= */
 
 async function watchRewardAd(){
-
-await showRewardAd();
-
+ const rewarded=await showRewardAd();
+ if(!rewarded)return;
+ balance+=NORMAL_AD_REWARD;
+ updateBalance();save();
+ showToast("🎉 +10 VOLIX — تمت المكافأة");
 }
 
+async function watchBoostAd(type){
+ const now=Date.now();
+ let last=type==="double"?lastDoubleAd:type==="bonus"?lastBonusAd:lastSpeedAd;
+ if(now-last<BOOST_COOLDOWN){
+  showToast("⏳ هذا الإعلان متاح مرة كل ساعة.");
+  return;
+ }
 
-/* =========================
-   TASKS
-========================= */
+ const rewarded=await showRewardAd();
+ if(!rewarded)return;
 
-function completeTask(
-button,
-reward
-){
-
-if(
-button.dataset.done === "1"
-){
-
-showToast(
-"✅ تم تنفيذ هذه المهمة بالفعل"
-);
-
-return;
-
+ adsToday++;
+ if(type==="double"){
+  lastDoubleAd=now;
+  doubleUntil=now+DOUBLE_DURATION*1000;
+  showToast("⚡ تم تفعيل مضاعفة التعدين ×2 لمدة ساعة!");
+ }else if(type==="bonus"){
+  lastBonusAd=now;
+  balance+=BONUS_REWARD;
+  showToast("🎁 +50 VOLIX — تم استلام البونص!");
+ }else{
+  lastSpeedAd=now;
+  speedUntil=now+SPEED_DURATION*1000;
+  showToast("🚀 سرعة التعدين ×3 مفعلة لمدة 30 دقيقة!");
+ }
+ updateBalance();updateAdCounter();updateBoostUI();save();
 }
 
-button.dataset.done = "1";
-
-button.textContent =
-"تم";
-
-balance += reward;
-
-updateBalance();
-
-save();
-
-showToast(
-"🎉 حصلت على "
-+
-reward
-+
-" VOLIX"
-);
-
+function completeTask(button,reward){
+ if(button.dataset.done==="1"){showToast("✅ تم تنفيذ هذه المهمة بالفعل");return;}
+ button.dataset.done="1";button.textContent="تم";balance+=reward;updateBalance();save();
+ showToast("🎉 حصلت على "+reward+" VOLIX");
 }
-
-
-/* =========================
-   NAVIGATION
-========================= */
 
 function openPage(page){
-
-document
-.querySelectorAll(".page")
-.forEach(function(el){
-
-el.classList.remove(
-"active"
-);
-
-});
-
-const target =
-document.getElementById(page);
-
-if(target){
-
-target.classList.add(
-"active"
-);
-
+ document.querySelectorAll(".page").forEach(el=>el.classList.remove("active"));
+ const target=document.getElementById(page);if(target)target.classList.add("active");
+ document.querySelectorAll(".nav-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.page===page));
+ window.scrollTo({top:0,behavior:"smooth"});
 }
-
-document
-.querySelectorAll(".nav-btn")
-.forEach(function(btn){
-
-btn.classList.remove(
-"active"
-);
-
-if(
-btn.dataset.page === page
-){
-
-btn.classList.add(
-"active"
-);
-
-}
-
-});
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-
-/* =========================
-   TOAST
-========================= */
 
 function showToast(text){
-
-const toast =
-document.getElementById(
-"toast"
-);
-
-toast.textContent =
-text;
-
-toast.classList.add(
-"show"
-);
-
-setTimeout(function(){
-
-toast.classList.remove(
-"show"
-);
-
-},2500);
-
+ const toast=document.getElementById("toast");toast.textContent=text;toast.classList.add("show");
+ setTimeout(()=>toast.classList.remove("show"),2500);
 }
 
-
-/* =========================
-   MODAL
-========================= */
-
-function showModal(
-title,
-text
-){
-
-document.getElementById(
-"modalTitle"
-).textContent =
-title;
-
-document.getElementById(
-"modalText"
-).textContent =
-text;
-
-document.getElementById(
-"modal"
-).classList.add(
-"show"
-);
-
+function showModal(title,text){
+ document.getElementById("modalTitle").textContent=title;
+ document.getElementById("modalText").textContent=text;
+ document.getElementById("modal").classList.add("show");
 }
-
-
-function closeModal(){
-
-document.getElementById(
-"modal"
-).classList.remove(
-"show"
-);
-
-}
-
-
-/* =========================
-   REFERRAL
-========================= */
+function closeModal(){document.getElementById("modal").classList.remove("show");}
 
 function copyReferral(){
-
-let id =
-"volix_user";
-
-if(
-tg &&
-tg.initDataUnsafe &&
-tg.initDataUnsafe.user
-){
-
-id =
-tg.initDataUnsafe.user.id;
-
+ let id="volix_user";
+ if(tg&&tg.initDataUnsafe&&tg.initDataUnsafe.user)id=tg.initDataUnsafe.user.id;
+ const link="https://t.me/VOLIXMiniBot?startapp="+id;
+ if(navigator.clipboard)navigator.clipboard.writeText(link).then(()=>showToast("📋 تم نسخ رابط الدعوة")).catch(()=>showToast(link));
+ else showToast(link);
 }
 
-const link =
-"https://t.me/VOLIXMiniBot?startapp="
-+
-id;
-
-if(
-navigator.clipboard
-){
-
-navigator.clipboard
-.writeText(link)
-.then(function(){
-
-showToast(
-"📋 تم نسخ رابط الدعوة"
-);
-
-})
-.catch(function(){
-
-showToast(link);
-
-});
-
-}else{
-
-showToast(link);
-
+function requestWithdraw(method){
+ if(balance<1000){showModal("⚠️ السحب غير متاح","الحد الأدنى الحالي للسحب هو 1000 VOLIX.\nرصيدك الحالي: "+balance+" VOLIX.");return;}
+ showModal("💳 طلب سحب","طريقة السحب: "+method+"\n\nسيتم ربط طلبات السحب بالخادم في المرحلة القادمة.");
 }
-
-}
-
-
-/* =========================
-   WITHDRAW
-========================= */
-
-function requestWithdraw(
-method
-){
-
-if(balance < 1000){
-
-showModal(
-"⚠️ السحب غير متاح",
-"الحد الأدنى الحالي للسحب هو 1000 VOLIX.\nرصيدك الحالي: "
-+
-balance
-+
-" VOLIX."
-);
-
-return;
-
-}
-
-showModal(
-"💳 طلب سحب",
-"طريقة السحب: "
-+
-method
-+
-"\n\nسيتم ربط طلبات السحب بالخادم في المرحلة القادمة."
-);
-
-}
-
-
-/* =========================
-   TELEGRAM USER
-========================= */
 
 function loadTelegramUser(){
-
-if(
-!tg ||
-!tg.initDataUnsafe ||
-!tg.initDataUnsafe.user
-){
-
-return;
-
+ if(!tg||!tg.initDataUnsafe||!tg.initDataUnsafe.user)return;
+ const user=tg.initDataUnsafe.user;
+ const name=user.first_name||user.username||"VOLIX User";
+ const display=user.username?"@"+user.username:name;
+ const username=document.getElementById("username"),profileName=document.getElementById("profileName"),userId=document.getElementById("userId");
+ if(username)username.textContent=display;if(profileName)profileName.textContent=name;if(userId)userId.textContent=user.id;
+ const letter=name.charAt(0).toUpperCase();
+ const avatar=document.getElementById("avatar"),profileAvatar=document.getElementById("profileAvatar");
+ if(avatar)avatar.textContent=letter;if(profileAvatar)profileAvatar.textContent=letter;
 }
 
-const user =
-tg.initDataUnsafe.user;
-
-const name =
-user.first_name ||
-user.username ||
-"VOLIX User";
-
-const display =
-user.username
-?
-"@"+user.username
-:
-name;
-
-const username =
-document.getElementById(
-"username"
-);
-
-const profileName =
-document.getElementById(
-"profileName"
-);
-
-const userId =
-document.getElementById(
-"userId"
-);
-
-if(username)
-username.textContent =
-display;
-
-if(profileName)
-profileName.textContent =
-name;
-
-if(userId)
-userId.textContent =
-user.id;
-
-const letter =
-name.charAt(0).toUpperCase();
-
-const avatar =
-document.getElementById(
-"avatar"
-);
-
-const profileAvatar =
-document.getElementById(
-"profileAvatar"
-);
-
-if(avatar)
-avatar.textContent =
-letter;
-
-if(profileAvatar)
-profileAvatar.textContent =
-letter;
-
+function finishSplash(){
+ const splash=document.getElementById("splashScreen");
+ if(splash){splash.classList.add("hide");setTimeout(()=>splash.remove(),700);}
 }
 
-
-/* =========================
-   INIT
-========================= */
+function recoverMining(){
+ if(mining&&miningStart){
+  const elapsed=Math.floor((Date.now()-miningStart)/1000);
+  if(elapsed>=MINING_DURATION){
+   creditMining();
+  }else{
+   miningSeconds=elapsed;
+   const minute=Math.floor(elapsed/60);
+   if(minute>miningLastCreditMinute){
+    balance+=(minute-miningLastCreditMinute)*getRatePerMinute();
+    miningLastCreditMinute=minute;
+   }
+   save();
+  }
+ }else if(miningSeconds>=MINING_DURATION){
+  mining=false;
+  miningStart=0;
+  save();
+ }
+}
 
 checkAdsDate();
-
+recoverMining();
 updateBalance();
-
 updateAdCounter();
-
 updateTimer();
-
 loadTelegramUser();
-
 initAdsgram();
-
 updateMiningUI();
+updateBoostUI();
+if(mining)startMiningTimer();
 
+setInterval(updateBoostUI,1000);
+window.addEventListener("focus",()=>{recoverMining();updateTimer();updateBoostUI();});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){recoverMining();updateTimer();updateBoostUI();}});
+
+setTimeout(finishSplash,2500);
 </script>
-
 </body>
-  </html>
+</html>
