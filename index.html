@@ -215,6 +215,7 @@ let adLoading=false;
 let balance=Number(localStorage.getItem("volix_balance")||0);
 let mining=localStorage.getItem("volix_mining")==="true";
 let miningStart=Number(localStorage.getItem("volix_mining_start")||0);
+let miningEnd=Number(localStorage.getItem("volix_mining_end")||0);
 let miningSeconds=Number(localStorage.getItem("volix_mining_seconds")||0);
 let miningLastCreditMinute=Number(localStorage.getItem("volix_mining_last_credit_minute")||0);
 
@@ -248,6 +249,7 @@ function save(){
  localStorage.setItem("volix_balance",String(balance));
  localStorage.setItem("volix_mining",mining?"true":"false");
  localStorage.setItem("volix_mining_start",String(miningStart));
+ localStorage.setItem("volix_mining_end",String(miningEnd));
  localStorage.setItem("volix_mining_seconds",String(miningSeconds));
  localStorage.setItem("volix_mining_last_credit_minute",String(miningLastCreditMinute));
  localStorage.setItem("volix_ads_today",String(adsToday));
@@ -324,43 +326,61 @@ function setCooldownButton(id,lastTime,duration,activeText){
  }
 }
 
-function creditMining(){
- if(!mining||!miningStart)return;
+function syncMiningState(){
+ if(!mining || !miningEnd)return;
 
  const now=Date.now();
- let elapsed=Math.floor((now-miningStart)/1000);
- elapsed=Math.max(0,Math.min(elapsed,MINING_DURATION));
-
+ const elapsed=Math.max(0,Math.min(Math.floor((now-miningStart)/1000),MINING_DURATION));
  const minute=Math.floor(elapsed/60);
+
  if(minute>miningLastCreditMinute){
   const minutesToCredit=minute-miningLastCreditMinute;
   balance+=minutesToCredit*getRatePerMinute();
   miningLastCreditMinute=minute;
  }
+
  miningSeconds=elapsed;
 
- if(elapsed>=MINING_DURATION){
+ if(now>=miningEnd || elapsed>=MINING_DURATION){
   miningSeconds=MINING_DURATION;
   mining=false;
   miningStart=0;
+  miningEnd=0;
+  if(miningTimer){clearInterval(miningTimer);miningTimer=null;}
   showToast("⏱️ انتهت جلسة التعدين! شاهد إعلانًا لبدء جلسة جديدة.");
  }
 
  save();
  updateBalance();
- updateMiningUI();
+}
+
+function renderMiningTimer(){
+ const timer=document.getElementById("timer");
+ if(!timer)return;
+
+ let remaining=0;
+ if(mining && miningEnd){
+  remaining=Math.max(0,Math.ceil((miningEnd-Date.now())/1000));
+ }else if(miningSeconds<MINING_DURATION){
+  remaining=Math.max(0,MINING_DURATION-miningSeconds);
+ }
+
+ timer.textContent=formatTime(remaining);
 }
 
 function updateTimer(){
- creditMining();
- const timer=document.getElementById("timer");
- if(timer)timer.textContent=formatTime(miningSeconds>=MINING_DURATION?0:MINING_DURATION-miningSeconds);
+ if(mining && miningEnd){
+  syncMiningState();
+ }
+ renderMiningTimer();
+ updateMiningUI();
 }
 
 function beginMining(){
  if(mining){updateMiningUI();return;}
  mining=true;
  miningStart=Date.now();
+ miningEnd=miningStart+MINING_DURATION*1000;
  miningSeconds=0;
  miningLastCreditMinute=0;
  save();
@@ -376,7 +396,7 @@ function startMiningTimer(){
 
 function stopMining(){
  creditMining();
- mining=false;miningStart=0;miningSeconds=0;miningLastCreditMinute=0;
+ mining=false;miningStart=0;miningEnd=0;miningSeconds=0;miningLastCreditMinute=0;
  if(miningTimer){clearInterval(miningTimer);miningTimer=null;}
  save();updateMiningUI();updateTimer();
  showToast("⏸️ تم إيقاف التعدين");
@@ -460,7 +480,6 @@ async function watchBoostAd(type){
  const rewarded=await showRewardAd();
  if(!rewarded)return;
 
- adsToday++;
  if(type==="double"){
   lastDoubleAd=now;
   doubleUntil=now+DOUBLE_DURATION*1000;
@@ -533,25 +552,34 @@ function finishSplash(){
 }
 
 function recoverMining(){
- if(mining&&miningStart){
-  const elapsed=Math.floor((Date.now()-miningStart)/1000);
-  if(elapsed>=MINING_DURATION){
-   creditMining();
-  }else{
-   miningSeconds=elapsed;
-   const minute=Math.floor(elapsed/60);
-   if(minute>miningLastCreditMinute){
-    balance+=(minute-miningLastCreditMinute)*getRatePerMinute();
-    miningLastCreditMinute=minute;
-   }
-   save();
-  }
+ if(mining && miningEnd){
+  syncMiningState();
+ }else if(mining && !miningEnd && miningStart){
+  miningEnd=miningStart+MINING_DURATION*1000;
+  syncMiningState();
  }else if(miningSeconds>=MINING_DURATION){
   mining=false;
   miningStart=0;
+  miningEnd=0;
   save();
  }
+ renderMiningTimer();
+ updateMiningUI();
 }
+
+document.addEventListener("visibilitychange",function(){
+ if(document.visibilityState==="visible"){
+  recoverMining();
+  updateTimer();
+  updateBoostUI();
+ }
+});
+
+window.addEventListener("focus",function(){
+ recoverMining();
+ updateTimer();
+ updateBoostUI();
+});
 
 checkAdsDate();
 recoverMining();
