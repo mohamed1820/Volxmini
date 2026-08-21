@@ -391,7 +391,7 @@ function beginMining(){
 
 function startMiningTimer(){
  if(miningTimer)clearInterval(miningTimer);
- miningTimer=setInterval(updateTimer,1000);
+ miningTimer=setInterval(updateTimer,250);
 }
 
 function stopMining(){
@@ -552,17 +552,26 @@ function finishSplash(){
 }
 
 function recoverMining(){
+ // ترحيل جلسات التعدين القديمة التي كانت تحفظ miningSeconds فقط.
+ // ننشئ لها وقت بداية/نهاية حقيقي حتى لا يظل العداد ثابتًا.
+ if(mining && !miningEnd){
+  if(miningSeconds < MINING_DURATION){
+   miningStart = Date.now() - (miningSeconds * 1000);
+   miningEnd = miningStart + (MINING_DURATION * 1000);
+   save();
+  }else{
+   mining=false;
+   miningStart=0;
+   miningEnd=0;
+   miningSeconds=MINING_DURATION;
+   save();
+  }
+ }
+
  if(mining && miningEnd){
   syncMiningState();
- }else if(mining && !miningEnd && miningStart){
-  miningEnd=miningStart+MINING_DURATION*1000;
-  syncMiningState();
- }else if(miningSeconds>=MINING_DURATION){
-  mining=false;
-  miningStart=0;
-  miningEnd=0;
-  save();
  }
+
  renderMiningTimer();
  updateMiningUI();
 }
